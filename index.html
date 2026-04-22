@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vallin's Garden V7</title>
+    <title>Vallin's Garden V8</title>
     <style>
         :root {
-            --primary: #4CAF50;
-            --dark: #2E7D32;
-            --light: #f4f6f3;
-            --text: #333;
-            /* Couleurs du design potager */
-            --bg-sand: #FDF0D5;    /* Couleur sable du fond du jardin */
-            --empty: #ffffff;      /* Blanc (comme le dessin) */
-            --partial: #aed581;    /* Vert clair */
-            --full: #2e7d32;       /* Vert foncé */
+            --primary: #4CAF50; --dark: #2E7D32; --light: #f4f6f3; --text: #333;
+            --bg-sand: #FDF0D5; --empty: #ffffff; --partial: #aed581; --full: #2e7d32;
         }
 
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--light); color: var(--text); padding-bottom: 30px; }
@@ -31,126 +24,34 @@
         .container { padding: 10px; }
         .hidden { display: none !important; }
 
-        /* =========================================
-           DESIGN DU JARDIN SUR-MESURE (IMAGE)
-           ========================================= */
+        /* JARDIN DESIGN */
         .garden-grid { 
-            display: grid; 
-            /* 8 colonnes: Massif(1), A1-A3(2-4), A4-A6(5-7), Vignes(8) */
-            grid-template-columns: 25px repeat(6, 1fr) 25px; 
-            grid-template-rows: repeat(3, 110px); /* 3 lignes (A, B, C) */
-            gap: 6px; 
-            background-color: var(--bg-sand);
-            padding: 8px;
-            border: 3px solid black; /* Bordure extérieure noire */
-            border-radius: 2px;
-            margin-top: 10px;
+            display: grid; grid-template-columns: 25px repeat(6, 1fr) 25px; grid-template-rows: repeat(3, 110px); 
+            gap: 6px; background-color: var(--bg-sand); padding: 8px; border: 3px solid black; border-radius: 2px; margin-top: 10px;
         }
+        .cell { display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; }
+        .section-active { background-color: var(--empty); border: 2px solid black; cursor: pointer; box-shadow: 1px 1px 3px rgba(0,0,0,0.1); color: black; }
+        .decor { border: 2px solid black; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: bold; color: black; }
+        .hatched { background: repeating-linear-gradient(45deg, #fff, #fff 3px, #666 3px, #666 4px); }
+        .vertical-text { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; letter-spacing: 1px; }
+        .compost { background-color: #8D6E63; color: white; border: 2px solid black; height: 35px; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: bold; }
+        .cabane-area { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 5px; }
+        .eau { width: 32px; height: 32px; background-color: #4A90E2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.55rem; font-weight: bold; margin-bottom: 5px; border: 1px solid #333; }
+        .cabane { background-color: #F4A460; border: 2px solid black; width: 90%; height: 55px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; color: black; }
 
-        .cell {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* Sections actives (A1-A6, B1-B6, C4-C6) */
-        .section-active {
-            background-color: var(--empty);
-            border: 2px solid black;
-            cursor: pointer;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-            color: black;
-        }
-
-        /* Décors (Hachures) */
-        .decor {
-            border: 2px solid black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.5rem;
-            font-weight: bold;
-            color: black;
-        }
-        
-        .hatched {
-            background: repeating-linear-gradient(
-              45deg,
-              #fff,
-              #fff 3px,
-              #666 3px,
-              #666 4px
-            );
-        }
-
-        .vertical-text {
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            white-space: nowrap;
-            letter-spacing: 1px;
-        }
-
-        /* Compost */
-        .compost {
-            background-color: #8D6E63;
-            color: white;
-            border: 2px solid black;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.55rem;
-            font-weight: bold;
-        }
-
-        /* Cabane & Eau */
-        .cabane-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            padding-bottom: 5px;
-        }
-
-        .eau {
-            width: 32px;
-            height: 32px;
-            background-color: #4A90E2;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.55rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            border: 1px solid #333;
-        }
-
-        .cabane {
-            background-color: #F4A460;
-            border: 2px solid black;
-            width: 90%;
-            height: 55px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.8rem;
-            color: black;
-        }
-
-        /* =========================================
-           AUTRES VUES
-           ========================================= */
+        /* VUES */
         .subsection-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 15px; }
         .subsection { background: white; border: 1px solid #ccc; padding: 2px; text-align: center; min-height: 50px; font-size: 0.55rem; }
         .card { background: white; padding: 12px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .btn { background-color: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; }
+        
+        .btn { background-color: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; font-weight: bold; font-size: 0.9rem; margin-bottom: 5px;}
+        .btn-secondary { background-color: #607D8B; padding: 8px; font-size: 0.8rem; }
+        .btn-del { background: #ff5252; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; float: right; margin-left: 5px;}
+        .btn-edit { background: #FF9800; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; float: right; }
+        
         .decade-row { display: flex; gap: 5px; margin-bottom: 8px; align-items: center; font-size: 0.8rem;}
         select, input { padding: 8px; border-radius: 4px; border: 1px solid #ddd; width: 100%; box-sizing: border-box;}
+        .action-row { display: flex; gap: 5px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -166,40 +67,27 @@
 
     <div class="container">
         
+        <!-- VUE JARDIN -->
         <div id="garden-view">
             <div style="font-size: 0.8rem; text-align: center; margin-bottom: 5px;">
-                <span style="color:#666">■ Vide</span> | 
-                <span style="color:var(--partial)">■ En cours</span> | 
-                <span style="color:var(--full)">■ Rempli</span>
+                <span style="color:#666">■ Vide</span> | <span style="color:var(--partial)">■ En cours</span> | <span style="color:var(--full)">■ Rempli</span>
             </div>
 
-            <!-- Grille hardcodée représentant l'image -->
             <div class="garden-grid" id="grid-container">
-                
-                <!-- Décor Gauche -->
-                <div class="decor hatched" style="grid-column: 1; grid-row: 1 / 3;">
-                    <span class="vertical-text">MASSIF FLEURI</span>
-                </div>
-
-                <!-- Ligne A -->
+                <div class="decor hatched" style="grid-column: 1; grid-row: 1 / 3;"><span class="vertical-text">MASSIF FLEURI</span></div>
                 <div id="A1" class="cell section-active" style="grid-column: 2; grid-row: 1;">A1</div>
                 <div id="A2" class="cell section-active" style="grid-column: 3; grid-row: 1;">A2</div>
                 <div id="A3" class="cell section-active" style="grid-column: 4; grid-row: 1;">A3</div>
                 <div id="A4" class="cell section-active" style="grid-column: 5; grid-row: 1;">A4</div>
                 <div id="A5" class="cell section-active" style="grid-column: 6; grid-row: 1;">A5</div>
                 
-                <!-- Compost + A6 -->
                 <div style="grid-column: 7; grid-row: 1; display: flex; flex-direction: column; gap: 4px;">
                     <div class="compost">COMPOST</div>
                     <div id="A6" class="cell section-active" style="flex: 1;">A6</div>
                 </div>
 
-                <!-- Décor Droite -->
-                <div class="decor hatched" style="grid-column: 8; grid-row: 1 / 4;">
-                    <span class="vertical-text">VIGNES ET AROMATIQUES</span>
-                </div>
-
-                <!-- Ligne B -->
+                <div class="decor hatched" style="grid-column: 8; grid-row: 1 / 4;"><span class="vertical-text">VIGNES ET AROMATIQUES</span></div>
+                
                 <div id="B1" class="cell section-active" style="grid-column: 2; grid-row: 2;">B1</div>
                 <div id="B2" class="cell section-active" style="grid-column: 3; grid-row: 2;">B2</div>
                 <div id="B3" class="cell section-active" style="grid-column: 4; grid-row: 2;">B3</div>
@@ -207,7 +95,6 @@
                 <div id="B5" class="cell section-active" style="grid-column: 6; grid-row: 2;">B5</div>
                 <div id="B6" class="cell section-active" style="grid-column: 7; grid-row: 2;">B6</div>
 
-                <!-- Ligne C : Cabane et Sections C4-C6 -->
                 <div class="cabane-area" style="grid-column: 2 / 5; grid-row: 3;">
                     <div class="eau">EAU</div>
                     <div class="cabane">CABANE</div>
@@ -216,12 +103,21 @@
                 <div id="C4" class="cell section-active" style="grid-column: 5; grid-row: 3;">C4</div>
                 <div id="C5" class="cell section-active" style="grid-column: 6; grid-row: 3;">C5</div>
                 <div id="C6" class="cell section-active" style="grid-column: 7; grid-row: 3;">C6</div>
-
             </div>
 
-            <button class="btn" style="background:#607D8B; margin-top:20px;" onclick="exportHistory()">⬇ Exporter CSV</button>
+            <!-- BACKUPS HISTORIQUE -->
+            <div class="card" style="margin-top:20px; background:#e8ecee;">
+                <h4 style="margin-top:0; margin-bottom:10px;">💾 Sauvegarde de l'Historique</h4>
+                <button class="btn btn-secondary" style="background:#4A90E2;" onclick="exportCSV()">1. Exporter pour Excel (CSV)</button>
+                <div class="action-row">
+                    <button class="btn btn-secondary" onclick="exportData('history')">Exporter (JSON)</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('import-history').click()">Importer (JSON)</button>
+                    <input type="file" id="import-history" class="hidden" accept=".json" onchange="importData(event, 'history')">
+                </div>
+            </div>
         </div>
 
+        <!-- VUE SECTION -->
         <div id="section-view" class="hidden">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:white; padding:10px; border-radius:8px;">
                 <h3 id="current-section-title" style="margin:0; color:var(--dark)"></h3>
@@ -234,23 +130,42 @@
                 <label>Date de plantation</label>
                 <input type="date" id="plant-date" style="margin-bottom:10px;">
                 <button class="btn" onclick="savePlanting()">Valider sélection</button>
-                <button class="btn" style="background:#8d6e63; margin-top:5px;" onclick="clearSelected()">Vider sélection</button>
+                <button class="btn" style="background:#8d6e63;" onclick="clearSelected()">Vider sélection</button>
             </div>
         </div>
 
+        <!-- VUE PLANNING -->
         <div id="planning-view" class="hidden">
             <div id="planning-list" class="card" style="padding:0;"></div>
         </div>
 
+        <!-- VUE BASE DE DONNEES -->
         <div id="db-view" class="hidden">
-            <div class="card">
-                <h4>Nouvelle Espèce</h4>
-                <input type="text" id="new-plant-name" placeholder="Nom (ex: Tomate Cerise)">
-                <div class="decade-row">Semis : <select id="s-start"></select> à <select id="s-end"></select></div>
-                <div class="decade-row">Plant. : <select id="p-start"></select> à <select id="p-end"></select></div>
-                <div class="decade-row">Récolte : <select id="r-start"></select> à <select id="r-end"></select></div>
-                <button class="btn" onclick="addPlantToDB()">Enregistrer</button>
+            
+            <!-- BACKUPS BASE -->
+            <div class="card" style="background:#e8ecee;">
+                <h4 style="margin-top:0; margin-bottom:10px;">💾 Gestion de la Base</h4>
+                <div class="action-row" style="margin-top:0;">
+                    <button class="btn btn-secondary" onclick="exportData('plants')">Exporter la Base (JSON)</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('import-base').click()">Importer (JSON)</button>
+                    <input type="file" id="import-base" class="hidden" accept=".json" onchange="importData(event, 'plants')">
+                </div>
             </div>
+
+            <!-- FORMULAIRE BASE -->
+            <div class="card">
+                <h4 id="form-db-title" style="margin-top:0;">Nouvelle Espèce</h4>
+                <input type="text" id="new-plant-name" placeholder="Nom (ex: Tomate Cerise)" style="margin-bottom:5px;">
+                <input type="text" id="new-plant-comment" placeholder="Commentaire (ex: Espacer de 40cm)" style="margin-bottom:10px;">
+                
+                <div class="decade-row"><span style="width:60px">Semis</span> <select id="s-start"></select> à <select id="s-end"></select></div>
+                <div class="decade-row"><span style="width:60px">Plant.</span> <select id="p-start"></select> à <select id="p-end"></select></div>
+                <div class="decade-row"><span style="width:60px">Récolte</span> <select id="r-start"></select> à <select id="r-end"></select></div>
+                
+                <button class="btn" id="btn-save-plant" onclick="addPlantToDB()">Enregistrer</button>
+                <button class="btn hidden" id="btn-cancel-edit" style="background:#9e9e9e;" onclick="cancelEdit()">Annuler</button>
+            </div>
+            
             <div id="plants-list"></div>
         </div>
     </div>
@@ -260,36 +175,25 @@
         const decades = [];
         months.forEach(m => { [1,2,3].forEach(d => decades.push(`${m} D${d}`)); });
 
-        let appData = JSON.parse(localStorage.getItem('vallinsGardenV7')) || { garden: {}, plants: {}, history: [] };
+        let appData = JSON.parse(localStorage.getItem('vallinsGardenV8')) || { garden: {}, plants: {}, history: [] };
         let currentSection = null;
+        let editingPlantId = null; // Variable pour savoir si on modifie une plante
         const TOTAL_CASES = 14;
 
-        // Mise à jour visuelle du jardin en fonction des données
         function renderGarden() {
             const sections = ['A1','A2','A3','A4','A5','A6','B1','B2','B3','B4','B5','B6','C4','C5','C6'];
-            
             sections.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     const count = Object.keys(appData.garden[id] || {}).length;
-                    
-                    if (count === 0) {
-                        el.style.backgroundColor = 'var(--empty)';
-                        el.style.color = 'black';
-                    } else if (count === TOTAL_CASES) {
-                        el.style.backgroundColor = 'var(--full)';
-                        el.style.color = 'white';
-                    } else {
-                        el.style.backgroundColor = 'var(--partial)';
-                        el.style.color = 'black';
-                    }
-                    
+                    if (count === 0) { el.style.backgroundColor = 'var(--empty)'; el.style.color = 'black'; } 
+                    else if (count === TOTAL_CASES) { el.style.backgroundColor = 'var(--full)'; el.style.color = 'white'; } 
+                    else { el.style.backgroundColor = 'var(--partial)'; el.style.color = 'black'; }
                     el.onclick = () => openSection(id);
                 }
             });
         }
 
-        // --- Logique (14 cases) ---
         function openSection(id) {
             currentSection = id;
             document.getElementById('current-section-title').textContent = `Parcelle ${id}`;
@@ -302,10 +206,9 @@
             container.innerHTML = '';
             const data = appData.garden[currentSection] || {};
             for (let i = 1; i <= TOTAL_CASES; i++) {
-                const sub = document.createElement('div');
-                sub.className = 'subsection';
+                const sub = document.createElement('div'); sub.className = 'subsection';
                 const plant = data[i] ? appData.plants[data[i].plantId] : null;
-                sub.innerHTML = `<input type="checkbox" class="check-case" value="${i}"><br>${i}<br><span class="plant-info" style="font-weight:bold; color:var(--dark); display:block; margin-top:2px; font-size:0.5rem; word-break:break-word;">${plant ? plant.name : ''}</span>`;
+                sub.innerHTML = `<input type="checkbox" class="check-case" value="${i}"><br>${i}<br><span style="font-weight:bold; color:var(--dark); display:block; margin-top:2px; font-size:0.5rem; word-break:break-word;">${plant ? plant.name : ''}</span>`;
                 if(plant) sub.style.background = "#dcedc8";
                 sub.onclick = (e) => { if(e.target.tagName !== 'INPUT') { const cb = sub.querySelector('input'); cb.checked = !cb.checked; } };
                 container.appendChild(sub);
@@ -333,7 +236,6 @@
             }
         }
 
-        // --- Fonctions utilitaires (Navigation, Base, Planning, Export) ---
         function showView(v) {
             ['garden-view','section-view','planning-view','db-view'].forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById(v).classList.remove('hidden');
@@ -344,29 +246,114 @@
             if(v === 'planning-view') renderPlanning();
         }
 
+        /* --- GESTION DE LA BASE (Ajout / Modif / Suppression) --- */
         function addPlantToDB() {
             const name = document.getElementById('new-plant-name').value;
-            if(!name) return;
-            const id = 'p_' + Date.now();
-            appData.plants[id] = {
+            if(!name) return alert("Nom requis.");
+            
+            const plantData = {
                 name,
+                comment: document.getElementById('new-plant-comment').value,
                 semis: [document.getElementById('s-start').value, document.getElementById('s-end').value],
                 plant: [document.getElementById('p-start').value, document.getElementById('p-end').value],
                 recolte: [document.getElementById('r-start').value, document.getElementById('r-end').value]
             };
-            save(); renderDB(); updatePlantSelect();
+
+            if (editingPlantId) {
+                appData.plants[editingPlantId] = plantData; // Modification
+            } else {
+                appData.plants['p_' + Date.now()] = plantData; // Création
+            }
+
+            save(); renderDB(); updatePlantSelect(); cancelEdit();
+        }
+
+        function editPlant(id) {
+            editingPlantId = id;
+            const p = appData.plants[id];
+            
+            document.getElementById('form-db-title').textContent = "Modifier : " + p.name;
+            document.getElementById('new-plant-name').value = p.name;
+            document.getElementById('new-plant-comment').value = p.comment || '';
+            
+            document.getElementById('s-start').value = p.semis[0]; document.getElementById('s-end').value = p.semis[1];
+            document.getElementById('p-start').value = p.plant[0]; document.getElementById('p-end').value = p.plant[1];
+            document.getElementById('r-start').value = p.recolte[0]; document.getElementById('r-end').value = p.recolte[1];
+            
+            document.getElementById('btn-save-plant').textContent = "Sauvegarder les modifications";
+            document.getElementById('btn-save-plant').style.backgroundColor = "#FF9800";
+            document.getElementById('btn-cancel-edit').classList.remove('hidden');
+            
+            window.scrollTo(0, 0); // Remonte en haut de la page
+        }
+
+        function cancelEdit() {
+            editingPlantId = null;
+            document.getElementById('form-db-title').textContent = "Nouvelle Espèce";
             document.getElementById('new-plant-name').value = '';
+            document.getElementById('new-plant-comment').value = '';
+            ['s-start','s-end','p-start','p-end','r-start','r-end'].forEach(id => document.getElementById(id).value = "-");
+            
+            document.getElementById('btn-save-plant').textContent = "Enregistrer";
+            document.getElementById('btn-save-plant').style.backgroundColor = "var(--primary)";
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+        }
+
+        function deletePlant(id) {
+            if(confirm("Supprimer cette espèce de la base ?")) {
+                delete appData.plants[id];
+                save(); renderDB(); updatePlantSelect();
+            }
         }
 
         function renderDB() {
-            const list = document.getElementById('plants-list');
-            list.innerHTML = '';
+            const list = document.getElementById('plants-list'); list.innerHTML = '';
             Object.keys(appData.plants).forEach(id => {
                 const p = appData.plants[id];
-                list.innerHTML += `<div class="card"><strong>${p.name}</strong><br><small>Récolte: ${decades[p.recolte[0]] || '?'} à ${decades[p.recolte[1]] || '?'}</small></div>`;
+                list.innerHTML += `<div class="card">
+                    <button class="btn-del" onclick="deletePlant('${id}')">🗑️</button>
+                    <button class="btn-edit" onclick="editPlant('${id}')">✏️ Modifier</button>
+                    <strong style="color:var(--dark)">${p.name}</strong>
+                    ${p.comment ? `<br><small style="color:#666"><em>${p.comment}</em></small>` : ''}
+                    <br><small>Récolte: ${decades[p.recolte[0]] || '?'} à ${decades[p.recolte[1]] || '?'}</small>
+                </div>`;
             });
         }
 
+        /* --- IMPORT / EXPORT (JSON) --- */
+        function exportData(type) {
+            const dataToExport = type === 'plants' ? appData.plants : appData.history;
+            const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; 
+            a.download = `vallins_garden_${type}_backup.json`; a.click();
+        }
+
+        function importData(event, type) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (type === 'plants') {
+                        appData.plants = { ...appData.plants, ...importedData }; // Fusionne les plantes
+                        alert("Base de données importée avec succès !");
+                        renderDB(); updatePlantSelect();
+                    } else if (type === 'history') {
+                        appData.history = importedData; // Ecrase l'historique
+                        alert("Historique restauré avec succès !");
+                    }
+                    save();
+                } catch (err) {
+                    alert("Erreur: Le fichier n'est pas un fichier de sauvegarde valide.");
+                }
+                event.target.value = ""; // Reset input
+            };
+            reader.readAsText(file);
+        }
+
+        /* --- UTILITAIRES --- */
         function renderPlanning() {
             const list = document.getElementById('planning-list'); list.innerHTML = '';
             let items = [];
@@ -377,7 +364,7 @@
                 });
             });
             items.sort((a,b) => a.dec - b.dec).forEach(i => {
-                list.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee;"><b>${i.label}</b> : ${i.name} (Sec. ${i.sec} / Case ${i.case})</div>`;
+                list.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee;"><b>${i.label}</b> : <span style="color:var(--dark); font-weight:bold;">${i.name}</span> <small>(Sec. ${i.sec} / Case ${i.case})</small></div>`;
             });
         }
 
@@ -394,20 +381,18 @@
             });
         }
 
-        function save() { localStorage.setItem('vallinsGardenV7', JSON.stringify(appData)); }
+        function save() { localStorage.setItem('vallinsGardenV8', JSON.stringify(appData)); }
         
-        function exportHistory() {
-            let csv = "Annee,Section,Case,Plante,Date\n";
+        function exportCSV() {
+            let csv = "Annee,Section,Case,Plante,Date Action\n";
             appData.history.forEach(h => csv += `${h.year},${h.sec},${h.case},"${h.plant}",${h.date}\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = 'historique_potager.csv'; a.click();
+            const a = document.createElement('a'); a.href = url; a.download = 'historique_excel.csv'; a.click();
         }
 
         window.onload = () => {
-            populateDecadeSelects();
-            updatePlantSelect();
-            renderGarden();
+            populateDecadeSelects(); updatePlantSelect(); renderGarden();
             document.getElementById('plant-date').valueAsDate = new Date();
         };
     </script>
